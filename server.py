@@ -168,7 +168,7 @@ def queuestatus():
 	else:
 		return {"status": "done"}
 	
-@app.route("/quitgame", methods=["GET", "POST"]):
+@app.route("/quitgame", methods=["GET", "POST"])
 def quitgame():
 	player = request.args["player"]
 	os.remove("players/" + player)
