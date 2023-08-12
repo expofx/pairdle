@@ -22,17 +22,18 @@ def get_emb(word):
     response = requests.post("https://api.openai.com/v1/embeddings", json=data, headers=headers)
     return np.array(response.json()["data"][0]["embedding"])
 
-def get_distance(word1, word2):
+def get_similarity(word1, word2):
     emb1 = get_word_embedding(word1)
     emb2 = get_word_embedding(word2)
     # cosine similarity
-    similarity = np.dot(emb1, emb2) / (np.linalg.norm(emb1) * np.linalg.norm(emb2))
+    similarity = np.dot(emb1, emb2) # / (np.linalg.norm(emb1) * np.linalg.norm(emb2))
     return similarity
   
 if __name__ == "__main__":
 
   turns = 1
   embeddings = []
+  words = []
   players = []
 
   while True:
@@ -40,34 +41,30 @@ if __name__ == "__main__":
       player2_word = input("Player 2, enter your word: ").strip()
 
       embeddings.append(get_emb(player1_word))
+      words.append(player1_word)
       players.append('Player 1')
       embeddings.append(get_emb(player2_word))
+      words.append(player2_word)
       players.append('Player 2')
+
+      mat = np.array(embeddings)
+      vis = TSNE(n_components=2, perplexity=min(5, turns), random_state=42).fit_transform(mat)
+
+      # Highlight Movements for Player 1 and Player 2
+      for player_idx, color in zip([0, 1], ['red', 'blue']):
+          path = vis[player_idx::2]
+          plt.plot(path[:, 0], path[:, 1], color=color, linestyle='-', marker='o')
+          plt.text(path[-1, 0], path[-1, 1], turns, color=color)
+
+      plt.title("Players' movements through embedding space with t-SNE")
+      plt.show(block=False)
+      plt.pause(1)  # Real-time update effect
 
       if player1_word == player2_word:
           print(f"Congratulations! You both chose {player1_word} in {turns} turn(s).")
           break
 
-      distance = get_distance(player1_word, player2_word)
-      print(distance)
-      turns += 1
-  
-  df = pd.DataFrame({'emb': embeddings, 'player': players})
-
-  # Visualization
-  mat = np.array(df.emb.to_list())
-  perplexity = min(5, turns - 1)
-  vis = TSNE(n_components=2, perplexity=perplexity, random_state=42).fit_transform(mat)
-
-  colors = ["red", "blue"]
-  x, y = vis[:, 0], vis[:, 1]
-  color_indices = df.player.map({'Player 1': 0, 'Player 2': 1}).values
-
-  plt.scatter(x, y, c=color_indices, cmap=matplotlib.colors.ListedColormap(colors), alpha=0.5, s=50)
-
-  # Mark the ending point
-  plt.scatter(x[-2], y[-2], marker='x', color=colors[0], s=100)
-  plt.scatter(x[-1], y[-1], marker='x', color=colors[1], s=100)
-
-  plt.title("embedding space")  # t-SNE
-  plt.show()
+      ax.clear()
+      similarity = get_similarity(player1_word, player2_word)
+      print(similarity)
+      turns += 1 
