@@ -74,23 +74,20 @@ if __name__ == "__main__":
       turns += 1 
   
   # final visualization
-  df = pd.DataFrame({'emb': embeddings, 'word': words, 'player': players})
-
   from mpl_toolkits.mplot3d import Axes3D
 
-  # Visualization with 3D t-SNE
-  mat = np.array(df.emb.to_list())
+  mat = np.array(embeddings)
   vis = TSNE(n_components=3, perplexity=min(5, turns - 1), random_state=42).fit_transform(mat) # (n_turns*2, 3)
 
   colors = ["red", "blue"]
-  color_indices = df.player.map({'Player 1': 0, 'Player 2': 1}).values
+  color_indices = [0 if player == "Player 1" else 1 for player in players]
 
   fig = plt.figure(figsize=(10, 8))
   ax = fig.add_subplot(111, projection='3d')
   scatter = ax.scatter(vis[:, 0], vis[:, 1], vis[:, 2], c=color_indices, cmap=matplotlib.colors.ListedColormap(colors), alpha=0.5, s=50)
 
   # Add word labels
-  for i, word in enumerate(df.word):
+  for i, word in enumerate(words):
       ax.text(vis[i, 0], vis[i, 1], vis[i, 2], word, size=8, alpha=0.7)
       
   # add line for each player
