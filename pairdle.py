@@ -28,6 +28,10 @@ def get_similarity(word1, word2):
     # cosine similarity
     similarity = np.dot(emb1, emb2) # / (np.linalg.norm(emb1) * np.linalg.norm(emb2))
     return similarity
+
+def euclidean_dist(emb1, emb2):
+    distance = np.linalg.norm(emb1 - emb2)
+    return distance
   
 if __name__ == "__main__":
 
