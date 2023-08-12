@@ -34,6 +34,12 @@ def get_distance(word1, word2):
     similarity = np.dot(emb1, emb2) / (np.linalg.norm(emb1) * np.linalg.norm(emb2))
     return similarity
 
+@app.after_request
+def after_request(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    return response
+
 @app.route("/rand")
 def rand():
 	return secrets.token_urlsafe(16)
