@@ -170,6 +170,6 @@ def queuestatus():
 	
 @app.route("/quitgame", methods=["GET", "POST"])
 def quitgame():
-	player = request.args["player"]
+	player = secure_filename(request.args["player"])
 	os.remove("players/" + player)
 	return {"status": "ok"}
