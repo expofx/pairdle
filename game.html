@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
+
+</head>
+  
+<body>
+   <div class="row">
+    <div class="column">
+      
+    </div>
+    <div class="column"></div>
+  </div>
+  
+  <div class="fade-in-image">
+
+  </div>
+
+  
+  <div class="centered">
+    <div id="loading" style="font-size: xx-large;">
+      PAIRing with another user...
+    </div>  
+  </div>
+  
+  <div id="main" hidden>
+    <div>
+    <div><span id="you"></span></div>
+
+    <div>Partner: <span id="opp"></span></div>
+    </div>
+    
+    <div style="width: 100%;">
+      <div style="width: 50%; height: 300px; margin-left: 10%; float: left; ">
+        <h2>Word Bank:</h2>
+        <table id='word-table' style = 'float:center;'></table>
+      </div>
+      <div style="margin-left: 70%; height: 200px;margin-right: 10% " id='table'>
+        <table id='score-table'>
+        </table>
+        
+      </div>
+      <div id="guessing" style="margin-left: 70%; height: 200px;margin-right: 10% ">
+        <br/>
+      <label for="username"> Enter your guess:</label>
+    <input type="text" id="pairdle-guess" name="pairdle-guess" minlength="3" maxlength="20" autofocus required>
+    <button type="submit" id="submit-answer" onclick="sendAnswer()">Submit</button>
+      </div>
+    </div>
+
+    <div>
+    </div>
+
+    <br>
+
+    
+    <p id='urmom'></p>
+
+  </div>
+
+
+  <br/>
+  <div style = 'float:center;'>
+  
+  </div>
+
+</body>
+
+<script>
+
+   let btn = document.getElementById('submit-answer');
+   
+   // when the btn is clicked print info in console 
+   btn.addEventListener('click', (ev)=>{
+     console.log("Play button clicked");
+   });
+
+   document.addEventListener('keypress', (event)=>{
+
+     // event.keyCode or event.which  property will have the code of the pressed key
+     let keyCode = event.keyCode ? event.keyCode : event.which;
+
+     // 13 points the enter key
+     if(keyCode === 13) {
+       // call click function of the buttonn 
+       btn.click();
+     }
+       
+   });
+  
+</script>
+
+  <div id="instructions" style="visibility: hidden; position">
+    <h2>
+      Instructions
+    </h2>
+
+    <ol>
+
+      <li>You have been PAIRed up with another individual. The goal of this game is for the two of you to converge on the same word without any external communication.</li>
+       <li>You have been given a word bank of 15 random nouns; note that the order of words on your screen is different from that of your partner.
+On each turn, both of you will enter a word from this word bank.</li>
+       <li>Once both people have entered a word, you will receive a score. Your score for that turn can be interpreted as how similar the two words are; higher scores represent greater similarity.</li>
+       <li>Your score for that turn can be interpreted as how similar the two words are; higher scores represent greater similarity.</li>
+       <li>Once the two of you converge on a Schelling point, you win!!</li>
+    </ol>
+    
+  <div id="finalimg"></div>
+  </div>
+
+</html>

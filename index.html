@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+    
+  </head>
+  <body class="centered">
+     
+      <div class="typewriter" style="text-align: center;">
+        <h1 style="font-size: 100px;">Pairdle</h1>
+      </div>
+      
+    <div style="align-items: center;">
+      <h2>Username</h2>
+      <input class="center-block" id="uname" type="text" autofocus required>
+    </div>
+    <div class = 'fade-in-slow' style="width:100%; height:100px; border:1px solid white;">
+      <button id="play" class="center-block" onclick="enterlobby();" style="height:80px; position:relative; margin: -20px -28%; width:56%; top:50%; left:50%; font-size: x-large;">Play</button>
+    </div>
+  
+
+  </body>
+
+<script>
+  document.onmousedown = (e) => {
+    e.preventDefault();
+  }
+  
+  
+   let btn = document.getElementById('play');
+   
+   // when the btn is clicked print info in console 
+   btn.addEventListener('click', (ev)=>{
+     console.log("Play button clicked");
+   });
+
+   document.addEventListener('keypress', (event)=>{
+
+     // event.keyCode or event.which  property will have the code of the pressed key
+     let keyCode = event.keyCode ? event.keyCode : event.which;
+
+     // 13 points the enter key
+     if(keyCode === 13) {
+       // call click function of the buttonn 
+       btn.click();
+     }
+       
+   });
+</script>
+</html>
